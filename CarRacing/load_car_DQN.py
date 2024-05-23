@@ -11,7 +11,10 @@ print( "Obs space high = ", env.observation_space.high)
 print( "Obs space low", env.observation_space.low)
 #Naložimo in incializiramo agenta
 
-model = DQN.load("dqn_car", env=env)
+#model = DQN.load("dqn_car", env=env)
+
+#izbira najbolsega agenta ki smo ga najdli z tenzorflov
+model = DQN.load("100000", env=env)
 #Zaženemo in testiramo agenta
 
 mean_reward, std_reward = evaluate_policy(model, model.get_env(), n_eval_episodes=10)

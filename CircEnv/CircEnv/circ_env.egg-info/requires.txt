@@ -1,0 +1,6 @@
+gym==0.21.0
+pygame
+box2d
+stable-baselines3
+sb3_contrib
+tensorboard

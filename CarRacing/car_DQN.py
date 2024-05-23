@@ -3,6 +3,15 @@
 import gym
 from stable_baselines3 import DQN 
 import torch
+import os
+
+models_dir = "models/DQN"
+if not os.path.exists(models_dir):
+    os.makedirs(models_dir)
+    
+logdir = "logs"
+if not os.path.exists(logdir):
+    os.makedirs(logdir) 
 
 print(torch.cuda.is_available())
 
@@ -29,6 +38,7 @@ model = DQN('MlpPolicy',
             exploration_final_eps=0.07,
             policy_kwargs=policy_kwargs,
             seed=2,
+            tensorboard_log=logdir,
             verbose=1,
             device='cuda'  # Specify 'cuda' to use GPU
 )
@@ -36,7 +46,15 @@ model = DQN('MlpPolicy',
 
 
 #Učenje agenta
-model.learn(total_timesteps=1.2e5)
-
+#model.learn(total_timesteps=1.2e5)
 #Shranimo model
-model.save("dqn_car")
+#model.save("dqn_car")
+
+#Drug nacin ucenja agenta
+TIMESTEPS = 2000
+iters = 0
+while True:
+    iters += 1
+    model.learn(total_timesteps=TIMESTEPS, reset_num_timesteps=False, tb_log_name="DQN")
+    model.save(f"{models_dir}/{TIMESTEPS*iters}")
+
